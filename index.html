@@ -1,225 +1,194 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Một số điều muốn nhắn nhủ</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
+  background:radial-gradient(circle,#141414,#000);
   height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:radial-gradient(circle at top, #121212, #000);
-  font-family:"Book Antiqua", Palatino, "Palatino Linotype", serif;
-  color:#f4f1ec;
+  font-family:"Book Antiqua", Palatino, serif;
+  color:#f5f1e8;
   overflow:hidden;
 }
 
-/* CUỐN SÁCH */
+/* BOOK */
 .book{
-  width:92vw;
+  width:90vw;
   max-width:420px;
-  aspect-ratio:2.9/4;
+  aspect-ratio:3/4;
   position:relative;
   perspective:1600px;
 }
 
-/* GÁY */
-.spine{
-  position:absolute;
-  left:-18px;
-  width:18px;
-  height:100%;
-  background:linear-gradient(to right,#2a1b0d,#4b3317,#2a1b0d);
-  border-radius:14px 0 0 14px;
-  box-shadow:inset -2px 0 6px rgba(0,0,0,.7);
-}
-
-/* TRANG */
+/* PAGE */
 .page{
   position:absolute;
   inset:0;
-  background:#111;
+  background:#0e0c0a;
   border-radius:14px;
-  padding:28px;
+  padding:22px;
   display:flex;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
   text-align:center;
-
-  transform-origin:left center;
-  transition:transform 1.2s ease, opacity .8s ease;
-  will-change:transform;
-  overflow:hidden;
+  transform-origin:left;
+  transition:transform .9s ease, opacity .5s ease;
+  backface-visibility:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
-/* BÌA TRƯỚC */
-.cover{
-  background:#0e0b07;
-  box-shadow:
-    inset 0 0 45px rgba(255,200,120,.18),
-    0 25px 45px rgba(0,0,0,.8);
-}
-
-.cover img{
-  position:absolute;
-  inset:0;
+.page img{
   width:100%;
-  height:100%;
+  border-radius:10px;
+  margin-bottom:14px;
+  max-height:45%;
   object-fit:cover;
-  opacity:.85;
 }
 
-/* Viền vàng */
+.page h1{
+  font-size:1.3rem;
+  margin-bottom:12px;
+  letter-spacing:.5px;
+}
+
+.page p{
+  font-size:.95rem;
+  line-height:1.6;
+}
+
+/* COVER */
+.cover{
+  background:linear-gradient(145deg,#1a1208,#0a0502);
+  box-shadow:
+    inset 0 0 40px rgba(255,200,120,.15),
+    0 20px 45px rgba(0,0,0,.8);
+}
+
 .cover::after{
   content:"";
   position:absolute;
-  inset:14px;
-  border:1px solid rgba(255,200,120,.35);
+  inset:10px;
+  border:1px solid rgba(255,215,150,.35);
   border-radius:10px;
 }
 
-/* CHỮ */
-.text{
-  position:relative;
-  z-index:2;
-  font-size:clamp(16px,4.4vw,19px);
-  line-height:2;
-  letter-spacing:.45px;
-  text-shadow:0 2px 12px rgba(0,0,0,.75);
+.cover h1{
+  font-size:1.6rem;
+  margin-bottom:10px;
 }
 
-.title{
-  font-size:clamp(22px,5.8vw,28px);
-  letter-spacing:1.2px;
-  margin-bottom:18px;
+.cover h2{
+  font-weight:normal;
+  font-size:.9rem;
+  opacity:.8;
 }
 
-.author{
-  font-size:clamp(14px,4vw,16px);
-  opacity:.85;
-  font-style:italic;
+/* GOLD GLOW */
+.gold{
+  color:#e7c37a;
+  text-shadow:0 0 10px rgba(255,200,120,.4);
 }
 
-/* ẢNH NỀN TRANG */
-.page img.bg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.16;
-}
-
-/* LẬT */
+/* FLIP STATES */
 .flipped{
   transform:rotateY(-180deg);
-  opacity:0;
-}
-
-.hidden{
   opacity:0;
   pointer-events:none;
 }
 
-.hint{
-  position:absolute;
-  bottom:12px;
-  width:100%;
-  font-size:12px;
-  opacity:.6;
+/* MOBILE */
+@media(max-width:480px){
+  .page p{font-size:.9rem}
 }
-
-audio{display:none;}
 </style>
 </head>
 
 <body>
 
 <div class="book" id="book">
-  <div class="spine"></div>
 
-  <!-- BÌA -->
-  <div class="page cover">
-    <img src="images/cover.jpg">
-    <div class="text">
-      <div class="title">Một số điều<br>muốn nhắn nhủ</div>
-      <div class="author">Trương Đình Duy</div>
-    </div>
-    <div class="hint">(chạm để mở sách)</div>
+  <!-- BÌA TRƯỚC -->
+  <div class="page cover" style="z-index:10">
+    <h1 class="gold">Một số điều muốn nhắn nhủ</h1>
+    <h2>Trương Đình Duy</h2>
+    <p style="margin-top:16px;opacity:.7">
+      chạm nhẹ để lật từng trang…
+    </p>
   </div>
 
   <!-- TRANG 1 -->
-  <div class="page hidden">
-    <img class="bg" src="images/images1.jpg">
-    <div class="text">
-      Năm 2025 trôi qua không ồn ào,<br>
-      cũng chẳng quá rực rỡ.<br><br>
-      Nhưng là một năm đủ dài<br>
-      để anh hiểu rằng,<br>
-      có những điều chỉ cần tồn tại<br>
-      là đã mang ý nghĩa.
-    </div>
+  <div class="page" style="z-index:9">
+    <img src="images/images1.jpg">
+    <p>
+      Năm qua không phải lúc nào cũng nhẹ nhàng.  
+      Có những ngày mệt đến mức chỉ muốn im lặng,
+      nhưng em vẫn ở đó, lặng lẽ và đủ ấm.
+    </p>
   </div>
 
   <!-- TRANG 2 -->
-  <div class="page hidden">
-    <img class="bg" src="images/images2.jpg">
-    <div class="text">
-      Có những lúc mệt mỏi,<br>
-      những đoạn đường im lặng đến mức<br>
-      nghe rõ tiếng lòng mình.<br><br>
-      Và trong những lúc ấy,<br>
-      anh luôn nghĩ về em.
-    </div>
+  <div class="page" style="z-index:8">
+    <img src="images/images2.jpg">
+    <p>
+      Có thể anh không nói ra nhiều,  
+      nhưng từng khoảnh khắc ở bên em  
+      đều là những đoạn rất đẹp trong ký ức anh.
+    </p>
   </div>
 
   <!-- TRANG 3 -->
-  <div class="page hidden">
-    <img class="bg" src="images/images3.jpg">
-    <div class="text">
-      Không phải vì những lời lớn lao,<br>
-      cũng không phải vì điều gì quá hoàn hảo.<br><br>
-      Chỉ là cảm giác quen thuộc,<br>
-      rằng em ở đó —<br>
-      và thế là đủ.
-    </div>
+  <div class="page" style="z-index:7">
+    <img src="images/images3.jpg">
+    <p>
+      Chúng ta đều đã lớn hơn một chút,  
+      hiểu hơn về buồn – vui – chờ đợi,  
+      và cả cách trân trọng nhau hơn.
+    </p>
   </div>
 
-  <!-- TRANG CUỐI – LỜI NHẮN DÀI -->
-  <div class="page hidden">
-    <div class="text">
-      Khi cuốn sách này gần khép lại,<br>
-      anh chỉ mong em hiểu rằng…<br><br>
-
-      Không phải mọi ngày đều dễ dàng,<br>
-      không phải mọi khoảnh khắc đều đẹp.<br>
-      Nhưng chính vì vậy,<br>
-      sự hiện diện của em mới trở nên đáng giá.<br><br>
-
-      Bước sang 2026,<br>
-      anh không mong những điều quá lớn.<br>
-      Chỉ mong vẫn được đi cùng em,<br>
-      chậm thôi, nhưng đủ lâu.<br><br>
-
-      Nếu một ngày mọi thứ mỏi mệt,<br>
-      hãy nhớ rằng ở đây,<br>
-      luôn có một người<br>
-      sẵn sàng lật lại từng trang<br>
-      để đọc tiếp cùng em.
-    </div>
+  <!-- TRANG CUỐI -->
+  <div class="page cover" style="z-index:6">
+    <img src="images/images4.jpg">
+    <h1 class="gold">Chào đón 2026</h1>
+    <p>
+      Nếu được ước, anh chỉ mong  
+      năm mới đến chậm hơn một chút,  
+      để mình còn kịp thương nhau  
+      theo cách dịu dàng nhất.
+    </p>
   </div>
 
 </div>
 
-<audio id="music" loop>
-  <source src="music/all-the-kids-are-depress
+<audio id="bgm" autoplay loop>
+  <source src="music/all-the-kids-are-depressed.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const pages = document.querySelectorAll('.page');
+let index = 0;
+
+// bật nhạc khi chạm (cho mobile)
+document.body.addEventListener('click',()=>{
+  const m=document.getElementById('bgm');
+  if(m.paused) m.play();
+},{once:true});
+
+// lật sách
+document.getElementById('book').addEventListener('click',()=>{
+  if(index < pages.length){
+    pages[index].classList.add('flipped');
+    index++;
+  }
+});
+</script>
+
+</body>
+</html>
